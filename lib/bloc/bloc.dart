@@ -1,6 +1,5 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 class CounterState {
   final int count;
@@ -8,6 +7,30 @@ class CounterState {
   CounterState(this.count);
 }
 
+class State {
+  final int m;
+  State(this.m);
+}
+
+class StateCubit extends Cubit<State> {
+  StateCubit() : super(State(5));
+  void multiply() {
+    emit(State(state.m * 5));
+  }
+
+  void minus() {
+    emit(State(state.m - 10));
+  }
+}
+
+/* 
+abdalah 5 + 5
+bassant 5 + 5 + 10
+gameel 10
+sally 5 
+mazen 5 
+m khaled 10 
+ */
 class CounterCubit extends Cubit<CounterState> {
   CounterCubit() : super(CounterState(0));
 
@@ -18,9 +41,16 @@ class CounterCubit extends Cubit<CounterState> {
   void decrement() {
     emit(CounterState(state.count - 1));
   }
+
+  void reset() {
+    emit(CounterState(0));
+  }
+  //reset
 }
 
 class CounterPage extends StatelessWidget {
+  const CounterPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +58,7 @@ class CounterPage extends StatelessWidget {
         title: Text('Counter App'),
       ),
       body: Center(
-        child: BlocBuilder<CounterCubit, CounterState>(
+        child: BlocBuilder<StateCubit, State>(
           builder: (context, state) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -39,7 +69,8 @@ class CounterPage extends StatelessWidget {
                 ),
                 SizedBox(height: 16),
                 Text(
-                  '${state.count}',
+                  '${state.m}',
+                  //
                   style: TextStyle(fontSize: 48, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 32),
@@ -48,17 +79,26 @@ class CounterPage extends StatelessWidget {
                   children: [
                     ElevatedButton(
                       onPressed: () {
-                        context.read<CounterCubit>().decrement();
+                        context.read<StateCubit>().minus();
                       },
                       child: Text('-'),
                     ),
                     SizedBox(width: 16),
                     ElevatedButton(
                       onPressed: () {
-                        context.read<CounterCubit>().increment();
+                        context.read<StateCubit>().multiply();
                       },
-                      child: Text('+'),
+                      child: Text('*'),
                     ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    /* ElevatedButton(
+                      onPressed: () {
+                        context.read<CounterCubit>().reset();
+                      },
+                      child: Icon(Icons.restore),
+                    ), */
                   ],
                 ),
               ],
@@ -68,4 +108,4 @@ class CounterPage extends StatelessWidget {
       ),
     );
   }
-} */
+}
