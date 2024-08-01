@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/bloc/bloc.dart';
-import 'package:flutter_application_1/textfield/txt_field.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_application_1/logic/ui.dart';
 
-/* 
-complete assets == img - icon - font 
-use package in flutter audio
-textfield 
-treat with datatypes in flutter 
-today
- */
+// flutter pub add audioplayers
+
 /* 
 class MyApp extends StatelessWidget {
   @override
@@ -29,17 +22,40 @@ void main() {
   runApp(const MyApp());
 }
 
+/* 
+screen has 5 container 
+each container different color 
+each container different audio
+ */
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: BlocProvider(
-      create: (_) => StateCubit(),
-      child: CounterPage(),
-    ));
+      home: GoTo(),
+    );
   }
 }
 
+/* 
+mazen 5 
+ */
+class GoTo extends StatelessWidget {
+  const GoTo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('go to '), actions: [
+        IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (builder) => TuneView()));
+            },
+            icon: Icon(Icons.abc)),
+      ]),
+    );
+  }
+}
 // Bloc 
