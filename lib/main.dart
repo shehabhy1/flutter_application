@@ -1,61 +1,123 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/logic/ui.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_application_1/formfield.dart';
 
-// flutter pub add audioplayers
+void main() {
+  runApp(MyApp());
+}
 
-/* 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Counter App',
-      home: BlocProvider(
-        create: (_) => CounterCubit(),
-        child: CounterPage(),
+      home: Scaffold(
+        appBar: AppBar(title: Text('Simple Form')),
+        body: SimpleForm(),
       ),
     );
   }
 }
 
- */
-void main() {
-  runApp(const MyApp());
+class SimpleForm extends StatefulWidget {
+  @override
+  _SimpleFormState createState() => _SimpleFormState();
 }
 
-/* 
-screen has 5 container 
-each container different color 
-each container different audio
- */
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _SimpleFormState extends State<SimpleForm> {
+  final _usernameController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmPasswordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    super.dispose();
+  }
+
+  void _showSnackBar(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
+  }
+
+  void _validateInputs() {
+    if (_usernameController.text.isEmpty) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('data')));
+    }
+    if (_emailController.text.isEmpty) {
+      _showSnackBar('Please enter your email');
+      return;
+    }
+    if (!_emailController.text.contains('@')) {
+      _showSnackBar('Please enter a valid email');
+      return;
+    }
+    if (_passwordController.text.isEmpty) {
+      _showSnackBar('Please enter your password');
+      return;
+    }
+    if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[!@#\$&*~]).{8,}$')
+        .hasMatch(_passwordController.text)) {
+      _showSnackBar(
+          'Password must be at least 8 characters, include an uppercase letter and a special character');
+      return;
+    }
+    if (_confirmPasswordController.text != _passwordController.text) {
+      _showSnackBar('Passwords do not match');
+      return;
+    }
+
+    _showSnackBar('Processing Data');
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: GoTo(),
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: <Widget>[
+          TextField(
+            controller: _usernameController,
+            decoration: InputDecoration(
+              labelText: 'Username',
+            ),
+          ),
+          TextField(
+            inputFormatters: [
+              FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
+              LengthLimitingTextInputFormatter(10),
+            ],
+            controller: _emailController,
+            decoration: InputDecoration(
+              labelText: 'Email',
+            ),
+          ),
+          TextField(
+            controller: _passwordController,
+            decoration: InputDecoration(
+              labelText: 'Password',
+            ),
+            obscureText: true,
+          ),
+          TextField(
+            controller: _confirmPasswordController,
+            decoration: InputDecoration(
+              labelText: 'Confirm Password',
+            ),
+            obscureText: true,
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: _validateInputs,
+            child: Text('Submit'),
+          ),
+        ],
+      ),
     );
   }
 }
-
-/* 
-mazen 5 
- */
-class GoTo extends StatelessWidget {
-  const GoTo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('go to '), actions: [
-        IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (builder) => TuneView()));
-            },
-            icon: Icon(Icons.abc)),
-      ]),
-    );
-  }
-}
-// Bloc 

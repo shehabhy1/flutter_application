@@ -3,15 +3,7 @@ import 'package:flutter_application_1/logic/model.dart';
 
 class TuneItem extends StatefulWidget {
   const TuneItem({super.key, required this.tune});
-/* 
-bassant 5 + 5 + 10 + 20 
-gameel 5 
-abdallah 5 + 5 + 20 + 10
-gamell 5 + 5 + 20 
-shahnda 5 + 5 + 5 + 20 + 10
-sally 5 + 20 + 10 
-khaled 20
- */
+
   final TuneModel tune;
 
   @override
