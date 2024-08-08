@@ -1,4 +1,4 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 
 class FormFullExample extends StatefulWidget {
   @override
@@ -8,6 +8,7 @@ class FormFullExample extends StatefulWidget {
 class _FormFullExampleState extends State<FormFullExample> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   String _name = '';
 
   void _submitForm() {
@@ -47,6 +48,28 @@ class _FormFullExampleState extends State<FormFullExample> {
                   return null;
                 },
                 onSaved: (value) {
+                  _name = value ?? _nameController.text;
+                },
+              ),
+              TextFormField(
+                controller: emailController,
+                decoration: InputDecoration(
+                  labelText: 'Enter your email',
+                ),
+                validator: (value) {
+                  if (!value!.contains('@')) {
+                    return 'insert @ sign';
+                  }
+                  return null;
+                }
+                /* (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter some text';
+                  }
+                  return null;
+                }, */
+                ,
+                onSaved: (value) {
                   _name = value ?? '';
                 },
               ),
@@ -68,4 +91,3 @@ class _FormFullExampleState extends State<FormFullExample> {
     super.dispose();
   }
 }
- */

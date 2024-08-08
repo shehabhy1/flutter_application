@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_1/formfield.dart';
+import 'package:flutter_application_1/data/bloc/counter_bloc.dart';
+import 'package:flutter_application_1/data/bloc/ui.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+/* 
+bassant 5 + 5 + 10
+sally 5 
+abdallah 5 + 5 
+shahnda 5 + 5 + 5
+gameel 5  
+ */
 void main() {
   runApp(MyApp());
 }
@@ -9,10 +18,14 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: Text('Simple Form')),
-        body: SimpleForm(),
+    return BlocProvider(
+      create: (context) => NoteBloc(),
+      child: MaterialApp(
+        title: 'Notes App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: NotesScreen(),
       ),
     );
   }
